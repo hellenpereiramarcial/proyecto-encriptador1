@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encriptador de Textos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Imagen "a.png" en la esquina superior izquierda -->
+        <img src="a.png" alt="Logo" class="logo">
+        
+        <!-- Sección izquierda donde el usuario puede ingresar texto -->
+        <div class="left-section">
+            <textarea id="inputText" placeholder="Ingrese el texto aquí"></textarea>
+
+            <!-- Texto de advertencia con ícono -->
+            <div class="warning">
+                <img src="exclamacion.png" alt="Advertencia" class="warning-icon">
+                <span>Solo letras minúsculas y sin acentos</span>
+            </div>
+
+            <div class="buttons">
+                <button onclick="encrypt()">Encriptar</button>
+                <button onclick="decrypt()">Desencriptar</button>
+                <button id="copyButton" onclick="copyToClipboard()" style="display: none;">Copiar</button>
+            </div>
+        </div>
+        
+        <!-- Sección derecha con información adicional y una imagen -->
+        <div class="right-section">
+            <img id="puppetImage" src="muñeco.jpeg" alt="Imagen de un muñeco">
+            <p id="outputText" class="hidden"></p>
+            <p class="subtitle">Ningún mensaje fue encontrado</p>
+            <p class="subtitle-secondary">Ingresa el texto que desees encriptar o desencriptar.</p>
+        </div>
+    </div>
+
+    <!-- Rodapié con información del desarrollador -->
+    <footer>
+        Desarrollado por Hellen Pereira Marcial - Contador Auditor
+    </footer>
+
+    <script>
+        /* Función para encriptar el texto */
+        function encrypt() {
+            let text = document.getElementById("inputText").value;
+            let encryptedText = text
+                .replace(/e/g, "enter")
+                .replace(/i/g, "imes")
+                .replace(/a/g, "ai")
+                .replace(/o/g, "ober")
+                .replace(/u/g, "ufat");
+
+            document.getElementById("outputText").innerText = encryptedText;
+            document.getElementById("outputText").style.display = "block";
+            document.getElementById("copyButton").style.display = "block";
+
+            hideDefaultText();
+            hideImage();
+        }
+
+        /* Función para desencriptar el texto */
+        function decrypt() {
+            let text = document.getElementById("inputText").value;
+            let decryptedText = text
+                .replace(/enter/g, "e")
+                .replace(/imes/g, "i")
+                .replace(/ai/g, "a")
+                .replace(/ober/g, "o")
+                .replace(/ufat/g, "u");
+
+            document.getElementById("outputText").innerText = decryptedText;
+            document.getElementById("outputText").style.display = "block";
+            document.getElementById("copyButton").style.display = "none";
+
+            hideDefaultText();
+            hideImage();
+        }
+
+        /* Función para ocultar el texto por defecto */
+        function hideDefaultText() {
+            document.querySelector(".subtitle").classList.add("hidden");
+            document.querySelector(".subtitle-secondary").classList.add("hidden");
+        }
+
+        /* Función para ocultar la imagen */
+        function hideImage() {
+            document.getElementById("puppetImage").classList.add("hidden");
+        }
+
+        /* Función para copiar el texto al portapapeles */
+        function copyToClipboard() {
+            let text = document.getElementById("outputText").innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Texto copiado al portapapeles");
+                document.getElementById("copyButton").style.display = "none";
+            });
+        }
+    </script>
+
+</body>
+</html>
